@@ -3,9 +3,9 @@ import classes from "./RobotList.module.css";
 import RobotCard from './RobotCard';
 
 const RobotList = ({ robots }) => {
-  if (true) {
-    throw new Error('Noooooo!');
-  }
+  // if (true) {
+  //   throw new Error('Noooooo!');
+  // }
   return (
     <div className={classes.CardsList}>
       {

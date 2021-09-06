@@ -1,21 +1,7 @@
-@font-face {
-  font-family: 'SEGA LOGO FONT';
-  font-style: normal;
-  font-weight: normal;
-  src: local('SEGA LOGO FONT'), url('./SEGA.woff') format('woff');
-}
-
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 30px;
   padding: 20px 0;
-}
-
-.RoboFriends {
-  font-size: 55px;
-  font-weight: 200;
-  font-family: 'SEGA LOGO FONT';
-  color: #0ccac4;
 }

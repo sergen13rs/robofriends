@@ -1,32 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react'
+import { connect } from 'react-redux';
 
 import classes from './App.module.css';
 
 import RobotList from '../components/RobotList';
 import SearchBox from '../components/SearchBox';
 import ErrorBoundary from '../components/ErrorBoundary';
+import Header from '../components/Header';
+import { setSearchField, requestRobots } from '../actions';
 
-// import { robots } from './metadata';
 
-function App() {
-  const [searchValue, setSearchValue] = useState('');
-  const [robots, setRobots] = useState([]);
+function App({searchField, onSearchChange, robots, requestRobots}) {
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((users) => setRobots(users));
-  }, []);
+    requestRobots();
+  }, [requestRobots]);
 
   const searchHandler = (event) => {
-    setSearchValue(event.target.value);
+    onSearchChange(event.target.value);
   }
 
-  const filteredRobots = robots.filter(r => r.name.toLowerCase().includes(searchValue.toLowerCase()));
+  const filteredRobots = robots.filter(r => r.name.toLowerCase().includes(searchField.toLowerCase()));
 
   return (
     <div className={classes.App}>
-      <span className={classes.RoboFriends}>robofriends</span>
+      <Header />
       <SearchBox onChange={searchHandler} />
       <ErrorBoundary>
         <RobotList robots={filteredRobots} />
@@ -35,4 +33,16 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  searchField: state.searchRobots.searchField,
+  robots: state.requestRobots.robots,
+  isPending: state.requestRobots.isPending,
+  error: state.requestRobots.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSearchChange: (searchValue) => dispatch(setSearchField(searchValue)),
+  requestRobots: () => dispatch(requestRobots())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
